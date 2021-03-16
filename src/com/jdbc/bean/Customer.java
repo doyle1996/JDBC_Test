@@ -1,5 +1,6 @@
 package com.jdbc.bean;
 
+import java.sql.Blob;
 import java.util.Date;
 
 //ORM编程思想
@@ -14,7 +15,7 @@ public class Customer {
     private String email;
     private Date birth;
 
-    public Customer() {
+    public Customer(int id, java.sql.Date birth, String email, String name, Blob photo) {
 
     }
 
@@ -23,6 +24,9 @@ public class Customer {
         this.name = name;
         this.email = email;
         this.birth = birth;
+    }
+
+    public Customer() {
     }
 
     public int getId() {

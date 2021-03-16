@@ -20,7 +20,7 @@ ResultSetMetaData metaData = resultSet.getMetaData();
 public class CustomerForQuery {
     public static void main(String[] args) throws Exception {
 //        TestQuery();
-        //testQueryForCustomer1();
+//        testQueryForCustomer1();
 
 
     }
