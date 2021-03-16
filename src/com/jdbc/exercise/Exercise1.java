@@ -22,7 +22,8 @@ public class Exercise1 {
             String email=scanner.next();
             System.out.println("input birth");
             String birth=scanner.next();
-            String sql="insert into customers(name,email,birth)value(?,?,?)";int insertCount=update(sql,name,email,birth);
+            String sql="insert into customers(name,email,birth)value(?,?,?)";
+            int insertCount=update(sql,name,email,birth);
             if(insertCount>0){
                 System.out.println("success");
 
