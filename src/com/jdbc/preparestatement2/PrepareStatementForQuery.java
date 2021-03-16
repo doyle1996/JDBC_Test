@@ -16,57 +16,61 @@ import java.util.List;
 public class PrepareStatementForQuery {
     public static void main(String[] args) {
 //        testGetInstance();
-        test();
+//        test();
 
 
     }
 
-    /*
-针对不同表的通用查询，返回表中的一条记录
-*/
-//
-//    public static void testGetInstance() {
-//        String sql = "select id,name,email from customers where id=?";
-//        Customer instance1 = getInstance(Customer.class, sql, 2);
-//        System.out.println(instance1);
-//        String sql1 = "select order_id orderId ,order_name orderName ,order_date orderDate from `order` where order_id=?";
-//        Order instance2 = getInstance(Order.class, sql1, 2);
-//        System.out.println(instance2);
-//
-//    }
-//
-//    public static <T> T getInstance(Class<T> clazz, String sql, Object... args) {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        ResultSet resultSet = null;
-//        try {
-//            connection = JDBCUtils.getConnection();
-//            preparedStatement = connection.prepareStatement(sql);
-//            for (int i = 0; i < args.length; i++) {
-//                preparedStatement.setObject(i + 1, args[i]);
-//            }
-//            resultSet = preparedStatement.executeQuery();
-//            ResultSetMetaData metaData = resultSet.getMetaData();
-//            int columnCount = metaData.getColumnCount();
-//            if (resultSet.next()) {
-//                T t = clazz.newInstance();
-//                for (int i = 0; i < columnCount; i++) {
-//                    Object columnValue = resultSet.getObject(i + 1);
-//                    String columnLabel = metaData.getColumnLabel(i + 1);
-//                    Field declaredField = t.getClass().getDeclaredField(columnLabel);
-//                    declaredField.setAccessible(true);
-//                    declaredField.set(t, columnValue);
-//                }
-//                return t;
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            JDBCUtils.closeResource(connection, preparedStatement, resultSet);
-//
-//        }
-//        return null;
-//    }
+
+
+    //通用的查看操作 返回1条记录******
+
+    public static void testGetInstance() {
+        String sql = "select id,name,email from customers where id=?";
+        Customer instance1 = getInstance(Customer.class, sql, 2);
+        System.out.println(instance1);
+        String sql1 = "select order_id orderId ,order_name orderName ,order_date orderDate from `order` where order_id=?";
+        Order instance2 = getInstance(Order.class, sql1, 2);
+        System.out.println(instance2);
+
+    }
+
+    public static <T> T getInstance(Class<T> clazz, String sql, Object... args) {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = JDBCUtils.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                preparedStatement.setObject(i + 1, args[i]);
+            }
+            resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            if (resultSet.next()) {
+                T t = clazz.newInstance();
+                for (int i = 0; i < columnCount; i++) {
+                    Object columnValue = resultSet.getObject(i + 1);
+                    String columnLabel = metaData.getColumnLabel(i + 1);
+                    Field declaredField = t.getClass().getDeclaredField(columnLabel);
+                    declaredField.setAccessible(true);
+                    declaredField.set(t, columnValue);
+                }
+                return t;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(connection, preparedStatement, resultSet);
+
+        }
+        return null;
+    }
+
+
+    //通用的查看操作 返回多条记录******
+
 
     public static void test() {
         String sql = "select order_id orderId ,order_name orderName ,order_date orderDate from `order` where order_id<?";

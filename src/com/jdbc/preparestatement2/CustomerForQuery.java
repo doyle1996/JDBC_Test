@@ -24,50 +24,51 @@ public class CustomerForQuery {
 
 
     }
+
+
+
     //针对customer表的一种查询操作
-    /*
-    public static  void TestQuery(){
+    public static void TestQuery() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql="select id,name,email,birth from customers where id=?";
+            String sql = "select id,name,email,birth from customers where id=?";
 
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,"1");
+            preparedStatement.setString(1, "1");
             //执行 并返回结果集
             resultSet = preparedStatement.executeQuery();
             //处理结果集
-            if(resultSet.next()){ //判断结果集的下一条是否有数据，如果有数据，返回true，指针下移
+            if (resultSet.next()) { //判断结果集的下一条是否有数据，如果有数据，返回true，指针下移
                 //获取当前这条数据的各个字段值
-                int id=resultSet.getInt(1);
-                String name=resultSet.getString(2);
+                int id = resultSet.getInt(1);
+                String name = resultSet.getString(2);
                 String email = resultSet.getString(3);
                 Date birth = resultSet.getDate(4);
 
                 //方式一
-               // System.out.println("id="+id+",name="+name+",email="+email+",birth="+birth);
+                // System.out.println("id="+id+",name="+name+",email="+email+",birth="+birth);
                 //方式二
 //                Object[] data=new Object[]{id,name,email,birth};
                 //方式三 将数据封装为一个对象
-                Customer customer=new Customer(id,name,email,birth);
+                Customer customer = new Customer(id, name, email, birth);
                 System.out.println(customer);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         //关闭资源
-        JDBCUtils.closeResource(connection,preparedStatement,resultSet);
+        JDBCUtils.closeResource(connection, preparedStatement, resultSet);
     }
-     */
 
-    /*public static void testQueryForCustomer1() {
+
+    public static void testQueryForCustomer1() {
         String sql = "select name,id from customers where id=?";
         Customer customer = QueryForCustomer(sql, 2);
         System.out.println(customer);
     }
-
 
     //针对customer表的查询操作
     public static Customer QueryForCustomer(String sql, Object... args) {
@@ -109,8 +110,6 @@ public class CustomerForQuery {
 
 
     }
-*/
-
 
 
 }

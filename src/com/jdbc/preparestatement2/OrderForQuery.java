@@ -10,41 +10,41 @@ import java.sql.*;
 public class OrderForQuery {
     public static void main(String[] args) {
 //        QueryForOrder1();
-        test();
+        // test();
 
 
     }
 
 //不加参数的Order表查询
- /*
-  public static void QueryForOrder1()  {
+
+    public static void QueryForOrder1() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
             connection = JDBCUtils.getConnection();
-            String sql="select order_id,order_name,order_date from `order` where order_id=?";
+            String sql = "select order_id,order_name,order_date from `order` where order_id=?";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setObject(1,1);
+            preparedStatement.setObject(1, 1);
             resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 int id = (int) resultSet.getObject(1);
                 String name = (String) resultSet.getObject(2);
-                Date date= (Date) resultSet.getObject(3);
+                Date date = (Date) resultSet.getObject(3);
                 Order order = new Order(id, name, date);
                 System.out.println(order);
             }
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
-            JDBCUtils.closeResource(connection,preparedStatement,resultSet);
+        } finally {
+            JDBCUtils.closeResource(connection, preparedStatement, resultSet);
         }
 
-    }*/
+    }
 
     //加参数的Order表查询
-    public static  void test(){
-        String sql="select order_id orderId ,order_name orderName ,order_date orderDate from `order` where order_id=?";
+    public static void test() {
+        String sql = "select order_id orderId ,order_name orderName ,order_date orderDate from `order` where order_id=?";
         Order order = QueryForOrder2(sql, 2);
         System.out.println(order);
 

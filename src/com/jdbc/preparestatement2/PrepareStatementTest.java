@@ -15,17 +15,15 @@ import java.util.Properties;
 
 public class PrepareStatementTest {
     public static void main(String[] args) throws Exception {
-        //testInsert();
-        //testUpdate();
+//        testInsert();
+//        testUpdate();
 //        testDelete();
-        //testupdate();
-
+//        testupdate();
 
 
     }
 
     //1.customer添加一条数据 add
-    /*
    public static void testInsert() throws Exception {
         Connection conn= null;
         PreparedStatement preparedStatement= null;
@@ -80,10 +78,9 @@ public class PrepareStatementTest {
 
     }
 
-     */
+
 
     //2.修改customer表的一条记录
-    /*
     public static void testUpdate() throws Exception {
 //        1.数据库连接
         Connection conn = null;
@@ -110,10 +107,9 @@ public class PrepareStatementTest {
 
     }
 
-     */
+
 
     //3,customer表的删除操作
-    /*
     public static void testDelete() throws Exception {
         Connection conn = JDBCUtils.getConnection();
         String sql="delete from customers where id=?";
@@ -125,10 +121,12 @@ public class PrepareStatementTest {
 
     }
 
-     */
-    //4.通用的增删改
 
-    public static  void update(String sql,Object...args){
+
+
+
+    //4.通用的增删改 ****
+    public static void update(String sql, Object...args) {
         //连接数据库
         Connection conn = null;
         PreparedStatement preparedStatement = null;
@@ -138,36 +136,25 @@ public class PrepareStatementTest {
             preparedStatement = conn.prepareStatement(sql);
             //填充占位符
             for (int i = 0; i < args.length; i++) {
-                preparedStatement.setString(i+1, String.valueOf(args[i]));
+                preparedStatement.setString(i + 1, (String) args[i]);
             }
             preparedStatement.execute();
         } catch (Exception e) {
             e.printStackTrace();
-        }
-        finally {
-            JDBCUtils.closeResource(conn,preparedStatement);
+        } finally {
+            JDBCUtils.closeResource(conn, preparedStatement);
 
         }
 
 
     }
 
-    public static  void testupdate(){
-//        String sql="delete from customers where id=?";
-//        update(sql,3);
-        String sql="update `order` set order_name=? where order_id=?";
-        update(sql,"bbq","4");
+    public static void testupdate() {
+        String sql = "delete from customers where id=?";
+        update(sql, 3);
+//        String sql = "update `order` set order_name=? where order_id=?";
+        update(sql, "bbq", 4);
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }
