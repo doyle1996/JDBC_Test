@@ -1,0 +1,13 @@
+他们都是JDBC中定义的规范 两个接口
+PrepareStatement是Statement的子接口
+
+Statement：传递sql语句到数据库服务器中进行操作
+
+Statement的弊端：
+a.存在拼串操作，繁琐
+b.存在sql注入问题
+
+
+PrepareStatement性能更高
+PrepareStatement：可以实现Blob字段的操作
+                  预编译：sql语句执行过后会被缓存下来，下次调用如果是相同预编译语句，只要将参数传入就可以执行
