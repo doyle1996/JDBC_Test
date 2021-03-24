@@ -2,10 +2,8 @@ package com.jdbc.transation;
 
 import com.jdbc.util.JDBCUtils;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
+import java.lang.reflect.Field;
+import java.sql.*;
 /*
 数据库事务介绍
 ACID
@@ -21,11 +19,94 @@ ACID
 
 //针对数据表user_table 演示AA给BB转账100
 public class TransationTest {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 //        TransationTest();
-        TrainsationTest2();
+//        TrainsationTest2();
+        testTransactionSelect();
+        testTransactionUpdate();
+//
+    }
+
+
+    // *****************************
+    public static void testTransactionSelect() throws Exception {
+        Connection connection = JDBCUtils.getConnection();
+        //设置数据库的隔离级别
+        connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
+        //获取当前连接的隔离级别
+        System.out.println(connection.getTransactionIsolation());
+        //取消自动提交数据
+        connection.setAutoCommit(false);
+        String sql = "select user,password,balance from user_table where user= ?";
+        User user = getInstance2(connection, User.class, sql, "CC");
+        System.out.println(user);
+    }
+
+    public static void testTransactionUpdate() throws Exception {
+        Connection connection = JDBCUtils.getConnection();
+        //取消自动提交数据
+
+        connection.setAutoCommit(false);
+        String sql = "update user_table set balance=? where  user=?";
+        update2(connection, sql, 120000, "CC");
+        Thread.sleep(15000);
+        System.out.println("修改结束");
+
 
     }
+
+    //通用的查询操作，用于返回数据表中的一条记录(version2.0 考虑上事务)
+    public static <T> T getInstance2(Connection connection, Class<T> clazz, String sql, Object... args) {
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                preparedStatement.setObject(i + 1, args[i]);
+            }
+            resultSet = preparedStatement.executeQuery();
+            ResultSetMetaData metaData = resultSet.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            if (resultSet.next()) {
+                T t = clazz.newInstance();
+                for (int i = 0; i < columnCount; i++) {
+                    Object columnValue = resultSet.getObject(i + 1);
+                    String columnLabel = metaData.getColumnLabel(i + 1);
+                    Field declaredField = t.getClass().getDeclaredField(columnLabel);
+                    declaredField.setAccessible(true);
+                    declaredField.set(t, columnValue);
+                }
+                return t;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            JDBCUtils.closeResource(null, preparedStatement, resultSet);
+        }
+        return null;
+    }
+
+    //通用的更新操作(version2.0 考虑上事务)
+    public static int update2(Connection connection, String sql, Object... args) {
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            for (int i = 0; i < args.length; i++) {
+                preparedStatement.setObject(i + 1, args[i]);
+            }
+            return preparedStatement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+
+            JDBCUtils.closeResource(null, preparedStatement);
+        }
+
+        return 0;
+
+    }
+
 
     //*********************考虑数据事务情况下的转账操作****************************
     public static void TrainsationTest2() {
@@ -64,40 +145,7 @@ public class TransationTest {
         }
     }
 
-    public static int update2(Connection connection, String sql, Object... args) {
-        PreparedStatement preparedStatement = null;
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            for (int i = 0; i < args.length; i++) {
-                preparedStatement.setObject(i + 1, args[i]);
-            }
-            return preparedStatement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-
-            JDBCUtils.closeResource(null, preparedStatement);
-        }
-
-        return 0;
-
-    }
-
-
     //*********************未考虑数据事务情况下的转账操作****************************
-    public static void TransationTest() {
-
-
-        String sql1 = "update user_table set balance =balance-100 where user=?";
-        String sql2 = "update user_table set balance =balance+100 where user=?";
-
-        update(sql1, "AA");
-        //网络异常
-        System.out.println(10 / 0);
-        update(sql2, "BB");
-        System.out.println("转账成功");
-    }
-
     public static int update(String sql, Object... args) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -117,5 +165,18 @@ public class TransationTest {
 
         return 0;
 
+    }
+
+    public static void TransationTest() {
+
+
+        String sql1 = "update user_table set balance =balance-100 where user=?";
+        String sql2 = "update user_table set balance =balance+100 where user=?";
+
+        update(sql1, "AA");
+        //网络异常
+        System.out.println(10 / 0);
+        update(sql2, "BB");
+        System.out.println("转账成功");
     }
 }

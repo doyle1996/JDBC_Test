@@ -42,6 +42,7 @@
     <connection id="229c916d-c070-46f8-ae0c-8bf10593ca9d" />
   </component>
   <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="229c916d-c070-46f8-ae0c-8bf10593ca9d" dataset="test.user_table" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="229c916d-c070-46f8-ae0c-8bf10593ca9d" dataset="test.order" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="229c916d-c070-46f8-ae0c-8bf10593ca9d" dataset="test.examstudent" active-filter-id="EMPTY_FILTER" />
     <filter-actions connection-id="229c916d-c070-46f8-ae0c-8bf10593ca9d" dataset="test.customers" active-filter-id="EMPTY_FILTER" />

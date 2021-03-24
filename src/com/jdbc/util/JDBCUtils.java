@@ -45,7 +45,7 @@ public class JDBCUtils {
             throwables.printStackTrace();
         }
         try {if(resultSet!=null)
-            conn.close();
+            resultSet.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
