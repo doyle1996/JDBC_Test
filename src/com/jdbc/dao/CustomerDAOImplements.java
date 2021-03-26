@@ -1,4 +1,4 @@
-package com.jdbc.transation2.ado;
+package com.jdbc.dao;
 
 import com.jdbc.bean.Customer;
 
@@ -15,8 +15,6 @@ public class CustomerDAOImplements extends BaseDao implements CustomerDAO {
     public void insert(Connection connection, Customer customer) {
         String sql="insert into customers(name,email,birth)values(?,?,?)";
         update(connection,sql, customer.getName(),customer.getEmail(),customer.getBirth());
-
-
     }
 
     @Override

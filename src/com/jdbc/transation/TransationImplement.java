@@ -18,42 +18,8 @@ ACID
 */
 
 //针对数据表user_table 演示AA给BB转账100
-public class TransationTest {
-    public static void main(String[] args) throws Exception {
-//        TransationTest();
-//        TrainsationTest2();
-        testTransactionSelect();
-        testTransactionUpdate();
-//
-    }
-
-
+public class TransationImplement {
     // *****************************
-    public static void testTransactionSelect() throws Exception {
-        Connection connection = JDBCUtils.getConnection();
-        //设置数据库的隔离级别
-        connection.setTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
-        //获取当前连接的隔离级别
-        System.out.println(connection.getTransactionIsolation());
-        //取消自动提交数据
-        connection.setAutoCommit(false);
-        String sql = "select user,password,balance from user_table where user= ?";
-        User user = getInstance2(connection, User.class, sql, "CC");
-        System.out.println(user);
-    }
-
-    public static void testTransactionUpdate() throws Exception {
-        Connection connection = JDBCUtils.getConnection();
-        //取消自动提交数据
-
-        connection.setAutoCommit(false);
-        String sql = "update user_table set balance=? where  user=?";
-        update2(connection, sql, 120000, "CC");
-        Thread.sleep(15000);
-        System.out.println("修改结束");
-
-
-    }
 
     //通用的查询操作，用于返回数据表中的一条记录(version2.0 考虑上事务)
     public static <T> T getInstance2(Connection connection, Class<T> clazz, String sql, Object... args) {

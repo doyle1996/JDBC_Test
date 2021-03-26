@@ -1,4 +1,4 @@
-package com.jdbc.transation2.ado;
+package com.jdbc.dao;
 
 import com.jdbc.bean.Customer;
 

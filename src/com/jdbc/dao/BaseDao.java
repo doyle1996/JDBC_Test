@@ -1,4 +1,4 @@
-package com.jdbc.transation2.ado;
+package com.jdbc.dao;
 
 import com.jdbc.util.JDBCUtils;
 
@@ -116,11 +116,11 @@ public abstract class BaseDao {
         try {
             preparedStatement = connection.prepareStatement(sql);
             for (int i = 0; i < args.length; i++) {
-                preparedStatement.setObject(i + 1, args[i + 1]);
+                preparedStatement.setObject(i + 1, args[i]);
             }
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
-                resultSet.getObject(1);
+                return (E) resultSet.getObject(1);
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
