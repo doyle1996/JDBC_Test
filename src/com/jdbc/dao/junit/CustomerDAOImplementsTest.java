@@ -71,7 +71,7 @@ class CustomerDAOImplementsTest {
     void getCustomerById() {
         Connection connection = null;
         try {
-            connection = JDBCUtils.getConnection();
+            connection = JDBCUtils.getConnection1();
             Customer customer=dao.getCustomerById(connection,2);
             System.out.println(customer);
         } catch (Exception e) {
@@ -87,7 +87,7 @@ class CustomerDAOImplementsTest {
     void getAll() {
         Connection connection = null;
         try {
-            connection = JDBCUtils.getConnection();
+            connection = JDBCUtils.getConnection1();
             List<Customer> customerList=dao.getAll(connection);
             customerList.forEach(System.out::println);
             System.out.println("success");

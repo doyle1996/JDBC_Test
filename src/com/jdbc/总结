@@ -65,3 +65,8 @@ public static int update(String sql, Object... args)  {
         Class.forName(driverClass);
         Connection conn=DriverManager.getConnection(url,user,psw);
         System.out.println(conn);
+
+
+
+java的内存泄漏：
+内存中存在有对象 不能正确回收

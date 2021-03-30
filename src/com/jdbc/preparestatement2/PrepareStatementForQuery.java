@@ -4,6 +4,7 @@ package com.jdbc.preparestatement2;
 import com.jdbc.bean.Customer;
 import com.jdbc.bean.Order;
 import com.jdbc.util.JDBCUtils;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -15,8 +16,8 @@ import java.util.List;
 
 public class PrepareStatementForQuery {
     public static void main(String[] args) {
-//        testGetInstance();
-//        test();
+        testGetInstance();
+        test();
 
 
     }

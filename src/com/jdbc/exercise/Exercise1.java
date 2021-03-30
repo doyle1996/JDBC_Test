@@ -1,6 +1,7 @@
 package com.jdbc.exercise;
 
 import com.jdbc.util.JDBCUtils;
+import org.junit.jupiter.api.Test;
 
 import java.sql.*;
 import java.util.Scanner;
@@ -9,10 +10,8 @@ import java.util.Scanner;
  * 从控制台向数据库的表customer中插入一条数据
  * */
 public class Exercise1 {
-    public static void main(String[] args)  {
-        InsertTest();
 
-    }
+    @Test
     public static void InsertTest()  {
 
             Scanner scanner = new Scanner(System.in);
@@ -31,8 +30,6 @@ public class Exercise1 {
             else {
                 System.out.println("error");
             }
-
-
 
     }
 //通用的增删改操作

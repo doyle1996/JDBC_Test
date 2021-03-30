@@ -2,6 +2,7 @@ package com.jdbc.preparestatement2;
 
 import com.jdbc.bean.Order;
 import com.jdbc.util.JDBCUtils;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
 import java.sql.*;
@@ -9,14 +10,14 @@ import java.sql.*;
 //针对order表的通用查询工作
 public class OrderForQuery {
     public static void main(String[] args) {
-//        QueryForOrder1();
-        // test();
+        QueryForOrder1();
+         test();
 
 
     }
 
 //不加参数的Order表查询
-
+@Test
     public static void QueryForOrder1() {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
